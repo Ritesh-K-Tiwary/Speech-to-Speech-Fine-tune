@@ -359,18 +359,17 @@ trainer.train()
 <details>
 <summary><b>Click here to see Output-log</b></summary>
 
-    <div>
-      
-      <progress value='1001' max='1000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      [1000/1000 04:33, Epoch 0.61/1]
-    </div>
-    <table border="1" class="dataframe">
+<div>
+  <progress value="1000" max="1000" style="width:300px; height:20px; vertical-align: middle;"></progress>
+  [1000/1000 04:33, Epoch 0.61/1]
+</div>
+<table border="1" class="dataframe">
   <thead>
- <tr style="text-align: left;">
+    <tr style="text-align: left;">
       <th>Step</th>
       <th>Training Loss</th>
       <th>Validation Loss</th>
-      <th>Wer</th>
+      <th>WER</th>
     </tr>
   </thead>
   <tbody>
@@ -405,8 +404,9 @@ trainer.train()
       <td>1.150239</td>
     </tr>
   </tbody>
-</table><p>
+</table>
 </details>
+
 ## Save Model to Local Directory and Your Huggingface account:
 ```python
 from transformers import WhisperConfig, WhisperTokenizer, AutoModelForSpeechSeq2Seq
