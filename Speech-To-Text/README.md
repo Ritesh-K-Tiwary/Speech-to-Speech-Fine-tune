@@ -98,6 +98,104 @@ combined_data1 = combined_data1[combined_data1['audio'].apply(file_exists)]
 
 combined_data1
 ```
+<details>
+<summary><b>Click here to see Output-log</b></summary>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+      <th>timestamp</th>
+      <th>audio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>67</th>
+      <td>My favourite computer game is called Total Ann...</td>
+      <td>(0.0, 12.0)</td>
+      <td>output_segments/M_0219_11y2m_1/segment_0.wav</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Basically it's a blow em up and build it up st...</td>
+      <td>(12.0, 30.76)</td>
+      <td>output_segments/M_0219_11y2m_1/segment_1.wav</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>to get your resources so you can build your fa...</td>
+      <td>(30.76, 52.66)</td>
+      <td>output_segments/M_0219_11y2m_1/segment_2.wav</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>soldier. There are different levels of techno...</td>
+      <td>(52.66, 72.9)</td>
+      <td>output_segments/M_0219_11y2m_1/segment_3.wav</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>But every construction structure like cable la...</td>
+      <td>(74.2, 80.68)</td>
+      <td>output_segments/M_0219_11y2m_1/segment_4.wav</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3073</th>
+      <td>like Anastasia, then it took a long time ago,...</td>
+      <td>(52.82, 54.34)</td>
+      <td>output_segments/M_0133_08y9m_1/segment_6.wav</td>
+    </tr>
+    <tr>
+      <th>3074</th>
+      <td>yeah, but Anastasia's mum said, don't marry w...</td>
+      <td>(65.12, 65.52)</td>
+      <td>output_segments/M_0133_08y9m_1/segment_7.wav</td>
+    </tr>
+    <tr>
+      <th>3075</th>
+      <td>but Anastasia didn't like that man.</td>
+      <td>(68.58, 69.62)</td>
+      <td>output_segments/M_0133_08y9m_1/segment_8.wav</td>
+    </tr>
+    <tr>
+      <th>3076</th>
+      <td>And at the end, the other man that mum said,</td>
+      <td>(76.74, 77.2)</td>
+      <td>output_segments/M_0133_08y9m_1/segment_9.wav</td>
+    </tr>
+    <tr>
+      <th>3077</th>
+      <td>when he died, then mum said that, OK, then ma...</td>
+      <td>(81.94, 87.68)</td>
+      <td>output_segments/M_0133_08y9m_1/segment_10.wav</td>
+    </tr>
+  </tbody>
+</table>
+<p>2039 rows × 3 columns</p>
+</div>
+</details>
+
 Load and Preprocess audio data and applying filter:
 ```python
 # Function to load and process audio
@@ -132,6 +230,14 @@ processed_data = combined_data1.apply(prepare_dataset, axis=1)
 # Convert the processed data to a list of dictionaries
 processed_list = processed_data.tolist()
 ```
+<details>
+<summary><b>Click here to see Output-log</b></summary>
+Error processing file output_segments/F_0101_15y2m_1/segment_6.wav: Input signal length=0 is too small to resample from 22050->16000
+Error processing file output_segments/M_0138_13y3m_1/segment_34.wav: Input signal length=0 is too small to resample from 22050->16000
+Error processing file output_segments/M_0065_14y5m_1/segment_2.wav: Input signal length=0 is too small to resample from 22050->16000
+Error processing file output_segments/M_0991_07y6m_1/segment_16.wav: Input signal length=0 is too small to resample from 22050->16000
+Error processing file output_segments/M_0081_09y3m_1/segment_12.wav: Input signal length=0 is too small to resample from 22050->16000
+</details>
 ## Pretraining Process
 Split Data:
 ```python
@@ -143,6 +249,11 @@ train_set, test_set = train_test_split(processed_list, test_size=0.2, random_sta
 print(f"Training set size: {len(train_set)}")
 print(f"Test set size: {len(test_set)}")
 ```
+<details>
+<summary><b>Click here to see Output-log</b></summary>
+Training set size: 1627
+Test set size: 407
+</details>
 
 Training Argument Setup
 ```python
@@ -245,6 +356,57 @@ warnings.filterwarnings("ignore", message="None of the inputs have requires_grad
 
 trainer.train()
 ```
+<details>
+<summary><b>Click here to see Output-log</b></summary>
+
+    <div>
+      
+      <progress value='1001' max='1000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      [1000/1000 04:33, Epoch 0.61/1]
+    </div>
+    <table border="1" class="dataframe">
+  <thead>
+ <tr style="text-align: left;">
+      <th>Step</th>
+      <th>Training Loss</th>
+      <th>Validation Loss</th>
+      <th>Wer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>200</td>
+      <td>2.045600</td>
+      <td>2.245432</td>
+      <td>1.084672</td>
+    </tr>
+    <tr>
+      <td>400</td>
+      <td>2.135900</td>
+      <td>2.191325</td>
+      <td>1.109640</td>
+    </tr>
+    <tr>
+      <td>600</td>
+      <td>1.780600</td>
+      <td>2.095558</td>
+      <td>1.030829</td>
+    </tr>
+    <tr>
+      <td>800</td>
+      <td>2.101100</td>
+      <td>2.021609</td>
+      <td>1.138081</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>2.142900</td>
+      <td>1.996433</td>
+      <td>1.150239</td>
+    </tr>
+  </tbody>
+</table><p>
+</details>
 ## Save Model to Local Directory and Your Huggingface account:
 ```python
 from transformers import WhisperConfig, WhisperTokenizer, AutoModelForSpeechSeq2Seq
@@ -287,3 +449,7 @@ def transcribe_speech(filepath):
     return output["text"]
 transcribe_speech("output_segments/F_0050_10y9m_1/segment_2.wav")
 ```
+<details>
+<summary><b>Click here to see Output-log</b></summary>
+' Saturday we went to this train museum, which was okay, but it was a bit boring. And then because my nanny and granddad play bowls,'
+</details>
