@@ -28,13 +28,13 @@ Set up quantization configuration and Load the model with quantization:
 quantization_config = BitsAndBytesConfig(load_in_4bit=True)
 
 model = WhisperForConditionalGeneration.from_pretrained(
-    "openai/whisper-tiny",
+    "openai/whisper-tiny", # or whisper-large-v3
     quantization_config=quantization_config,
     low_cpu_mem_usage=True
 )
 
 # Set the language to English
-processor = WhisperProcessor.from_pretrained("openai/whisper-tiny",language='en', task="transcribe")
+processor = WhisperProcessor.from_pretrained("openai/whisper-tiny",language='en', task="transcribe") # or whisper-large-v3
 forced_decoder_ids = processor.tokenizer.get_decoder_prompt_ids(language="en", task="transcribe")
 model.config.forced_decoder_ids = forced_decoder_ids
 ```
@@ -64,7 +64,7 @@ import os
 import csv
 
 # Path to the folder containing the CSV files
-folder_path = '/home/arun/ritesh/practice/sayaliWork/processed_csv_folder_test'
+folder_path = '/path/to/csv/folder'
 
 # Create a list to hold the DataFrames
 data1 = []
@@ -91,7 +91,7 @@ combined_data1['audio'] = combined_data1['audio'].apply(modify_audio_path)
 
 # Function to check if the file exists
 def file_exists(path):
-    return os.path.exists(os.path.join('/home/arun/ritesh/practice/sayaliWork', path))
+    return os.path.exists(os.path.join('/path/to/files', path))
 
 # Filter the DataFrame to include only rows where the file exists
 combined_data1 = combined_data1[combined_data1['audio'].apply(file_exists)]
@@ -412,27 +412,27 @@ trainer.train()
 from transformers import WhisperConfig, WhisperTokenizer, AutoModelForSpeechSeq2Seq
 
 # Load and save config.json
-config = WhisperConfig.from_pretrained("openai/whisper-large-v3")
-config.save_pretrained("./whisper-large-v3-quantized")
+config = WhisperConfig.from_pretrained("openai/whisper-tiny")
+config.save_pretrained("./whisper-tiny-quantized")
 
 # Load and save tokenizer files
-tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-large-v3")
-tokenizer.save_pretrained("./whisper-large-v3-quantized")
+tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-tiny")
+tokenizer.save_pretrained("./whisper-tiny-quantized")
 
 # After quantization, load the quantized model
-model = AutoModelForSpeechSeq2Seq.from_pretrained("./whisper-large-v3-quantized")
-model.save_pretrained('./whisper-large-v3-quantized-repo')
+model = AutoModelForSpeechSeq2Seq.from_pretrained("./whisper-tiny-quantized")
+model.save_pretrained('./whisper-tiny-quantized')
 
 # Push all files to the Hugging Face Hub
 from huggingface_hub import Repository
-repo = Repository("./whisper-large-v3-quantized", clone_from="riteshkr/whisper-large-v3-quantized")
+repo = Repository("./whisper-tiny-quantized", clone_from="username/whisper-tiny-quantized")
 repo.push_to_hub(commit_message="Added quantized model, config, and tokenizer files")
 ```
 ## Inference
 ```python
 from transformers import pipeline
 
-model_id = "./whisper-large-v3-quantized"  # update with your model id
+model_id = "./whisper-tiny-quantized"  # update with your model id
 pipe = pipeline("automatic-speech-recognition", model=model_id)
 
 def transcribe_speech(filepath):
@@ -447,7 +447,7 @@ def transcribe_speech(filepath):
         batch_size=8,
     )
     return output["text"]
-transcribe_speech("output_segments/F_0050_10y9m_1/segment_2.wav")
+transcribe_speech("path/to/audio.wav")
 ```
 <details>
 <summary><b>Click here to see Output-log</b></summary>
