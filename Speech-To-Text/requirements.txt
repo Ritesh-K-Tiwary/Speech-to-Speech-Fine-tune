@@ -1,1 +1,7 @@
-
+transformers
+jiwer
+datasets
+torch
+librosa
+peft
+bitsandbytes
